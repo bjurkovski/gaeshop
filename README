@@ -1,1 +1,11 @@
 # gaeshop
+# software engineering final project
+
+# SDK Download here:
+http://code.google.com/appengine/downloads.html
+
+# Basic Tutorial on App Engine here:
+http://code.google.com/appengine/docs/python/gettingstarted/
+
+# To Run the server (localhost:8080), go to the SDK folder and:
+./dev_appserver.py app_path
