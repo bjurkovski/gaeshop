@@ -1,16 +1,16 @@
 from google.appengine.ext import db
 
 class Produto(db.Model):
-    preco = dbself.FloatProperty()
-    nome = dbself.StringProperty()
-    estoque = dbself.IntegerProperty()
-    visualizacoes = dbself.IntegerPropery()
+    preco = db.FloatProperty()
+    nome = db.StringProperty()
+    estoque = db.IntegerProperty()
+    visualizacoes = db.IntegerProperty()
 
 class Pedido(db.Model):
-    usuario = dbself.UserProperty()
-    estado = dbself.StringProperty()
-    formaDePagamento = dbself.StringProperty()
-    enderecoEntrega = dbself.StringProperty()
+    usuario = db.UserProperty()
+    estado = db.StringProperty()
+    formaDePagamento = db.StringProperty()
+    enderecoEntrega = db.StringProperty()
 
 class ReceptorPagamento(db.Model):
     pass
@@ -19,10 +19,10 @@ class Carrinho(db.Model):
     pass
 
 class Usuario(db.Model):
-    nome = dbself.StringProperty()
-    endereco = dbself.StringProperty()
-    telefone = dbself.StringProperty()
-    email = dbself.StringProperty()
-    CEP = dbself.StringProperty()
-    senha = dbself.StringProperty()
-    codigo = dbself.StringProperty()
+    nome = db.StringProperty()
+    endereco = db.StringProperty()
+    telefone = db.StringProperty()
+    email = db.StringProperty()
+    CEP = db.StringProperty()
+    senha = db.StringProperty()
+    codigo = db.StringProperty()
