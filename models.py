@@ -1,28 +1,28 @@
 from google.appengine.ext import db
 
-class Produto(db.Model):
-    preco = db.FloatProperty()
-    nome = db.StringProperty()
-    estoque = db.IntegerProperty()
-    visualizacoes = db.IntegerProperty()
+class Product(db.Model):
+    price = db.FloatProperty()
+    name = db.StringProperty()
+    stock = db.IntegerProperty()
+    views = db.IntegerProperty()
 
-class Pedido(db.Model):
-    usuario = db.UserProperty()
-    estado = db.StringProperty()
-    formaDePagamento = db.StringProperty()
-    enderecoEntrega = db.StringProperty()
+class Order(db.Model):
+    user = db.UserProperty()
+    state = db.StringProperty()
+    paymentMethod = db.StringProperty()
+    shippingAddress = db.StringProperty()
 
-class ReceptorPagamento(db.Model):
+class PaymentReceiver(db.Model):
     pass
 
-class Carrinho(db.Model):
+class ShoppingCart(db.Model):
     pass
 
-class Usuario(db.Model):
-    nome = db.StringProperty()
-    endereco = db.StringProperty()
-    telefone = db.StringProperty()
+class User(db.Model):
+    name = db.StringProperty()
+    address = db.StringProperty()
+    phone = db.StringProperty()
     email = db.StringProperty()
-    CEP = db.StringProperty()
-    senha = db.StringProperty()
-    codigo = db.StringProperty()
+    zipcode = db.StringProperty()
+    password = db.StringProperty()
+    code = db.StringProperty()
