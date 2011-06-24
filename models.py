@@ -1,28 +1,61 @@
 from google.appengine.ext import db
 
-class Produto(db.Model):
-    preco = db.FloatProperty()
-    nome = db.StringProperty()
-    estoque = db.IntegerProperty()
-    visualizacoes = db.IntegerProperty()
+class Product(db.Model):
+    price = db.FloatProperty()
+    name = db.StringProperty()
+    description = db.StringProperty()
+    stock = db.IntegerProperty()
+    views = db.IntegerProperty()
 
-class Pedido(db.Model):
-    usuario = db.UserProperty()
-    estado = db.StringProperty()
-    formaDePagamento = db.StringProperty()
-    enderecoEntrega = db.StringProperty()
+    def __init__(self, name, description, price, stock)
+        pass
 
-class ReceptorPagamento(db.Model):
+    def getStock(self):
+        return 0
+
+    def match(self, search):
+        return True
+
+    def addView(self):
+        self.view += 1
+
+class Order(db.Model):
+    user = db.UserProperty()
+    state = db.StringProperty()
+    paymentMethod = db.StringProperty()
+    shippingAddress = db.StringProperty()
+
+class PaymentReceiver(db.Model):
     pass
 
-class Carrinho(db.Model):
-    pass
+class ShoppingCart(db.Model):
 
-class Usuario(db.Model):
-    nome = db.StringProperty()
-    endereco = db.StringProperty()
-    telefone = db.StringProperty()
+    def addProduct(self,product): 
+        return True
+
+    def getProducts(self)
+        return []
+
+class User(db.Model):
+    name = db.StringProperty()
+    address = db.StringProperty()
+    phone = db.StringProperty()
     email = db.StringProperty()
-    CEP = db.StringProperty()
-    senha = db.StringProperty()
-    codigo = db.StringProperty()
+    zipcode = db.StringProperty()
+    password = db.StringProperty()
+    code = db.StringProperty()
+
+    def addProductToShoppingCart(self,product):
+        pass
+        
+    def getAccount(self):
+        pass
+
+    def getShoppingCart(self):
+        pass
+
+    def getOrders(self):
+        pass
+
+    def addOrder(self,paymentMethod,shippingAddress):
+        return True
