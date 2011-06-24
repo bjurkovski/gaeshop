@@ -69,3 +69,20 @@ body {
 
 #content h1 {
 }
+
+.product {
+	margin-bottom: 20px;
+}
+
+.product h3 {
+	margin: 0;
+	padding: 0;
+}
+
+.product a, .product a:link, .product a:visited {
+	color: #FFF;
+}
+
+.product a:hover {
+	color: #B3E07B;
+}
