@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Health++ SportShop - Sua saúde em primeiro lugar!</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 		<!--
@@ -16,8 +17,16 @@
 				<img id="logo" src="/static/img/logo.png" alt="Health++ SportShop" height="40px"/>
 			</a>
 			<ul>
-				<li><a href="#">Login</a></li>
-				<li><a href="#">Registrar</a></li>
+				{% if user %}
+				<li><a href="{{ logoutURL }}">Deslogar</a></li>
+					{% if isAdmin %}
+					<li><a href="/admin">Administrar</a></li>
+					{% endif %}
+				<li><a href="/view/cart">Carrinho</a></li>
+				{% else %}
+				<li><a href="https://www.google.com/accounts/NewAccount" target="_blank">Registrar</a></li>
+				<li><a href="{{ loginURL }}">Login</a></li>
+				{% endif %}
 			</ul>
 		</div>
 
@@ -29,11 +38,6 @@
 		<script type="text/javascript" src="/static/js/jquery.json-2.2.min.js"> </script>
 		<script type="text/javascript" src="/static/js/jquery-ui-1.8.11.custom.min.js"> </script>
 		<script type="text/javascript" src="/static/js/jquery-ui-numeric-min.js"> </script>
-		<script type="text/javascript">
-			$(document).ready(function () {
-				$(".button").button();
-				$('.quantitySpinner').numeric({emptyValue: false, minValue: 1, increment: 1});
-			});
-		</script>
+		<script type="text/javascript" src="/static/js/gaeshop-all-scripts.js"> </script>
 	</body>
 </html>

@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+
+{% block content %}
+
+<h1>Cadastrar Produto</h1>
+
+<div class="formEntry">
+	<span class="label">Nome</span> <input type="text" size="50" id="productName"/>
+</div>
+<div class="formEntry">
+	<span class="label">Descrição</span>
+	<textarea cols="50" rows="5" style="vertical-align: top;" id="productDescription"></textarea>
+</div>
+<div class="formEntry">
+	<span class="label">Preço</span> <input type="text"  class="priceSpinner" size="5" id="productPrice"/>
+</div>
+<div class="formEntry">
+	<span class="label">Estoque</span> <input type="text" class="quantitySpinner" size="4" id="productStock"/>
+</div>
+<div class="formEntry">
+	<span class="label">Categoria</span> <input type="text" size="50" id="productCategory"/>
+</div>
+
+<button class="button" onclick="shop.registerProduct();">Cadastrar</button>
+
+{% endblock %}
+

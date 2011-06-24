@@ -51,6 +51,23 @@ class RegisterProduct(webapp.RequestHandler):
 
 		self.response.out.write(template.render(TEMPLATES_DIR + "registerProduct.html", param))
 
+	def post(self):
+		return
+
+class Admin(webapp.RequestHandler):
+	def get(self):
+		user = users.get_current_user()
+		isAdmin = users.is_current_user_admin()
+
+		if isAdmin:
+			param = {'user': user,
+					 'isAdmin': isAdmin,
+					 'loginURL': users.create_login_url("/"),
+					 'logoutURL': users.create_logout_url("/")
+					}
+
+			self.response.out.write(template.render(TEMPLATES_DIR + "admin.html", param))
+
 application = webapp.WSGIApplication(
 									[
 									# URLs go here
@@ -58,6 +75,7 @@ application = webapp.WSGIApplication(
 									 ('/view/cart', ViewCart),
 									 ('/view/product/([^/]+)', ViewProduct),
 									 ('/register/product', RegisterProduct),
+									 ('/admin', Admin),
 									 ('/.*', Home)
 									],
 									debug=True)

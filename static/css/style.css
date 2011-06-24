@@ -68,21 +68,33 @@ body {
 }
 
 #content h1 {
-}
-
-.product {
 	margin-bottom: 50px;
 }
 
-.product h3 {
-	margin: 0;
-	padding: 0;
-}
-
-.product a, .product a:link, .product a:visited {
+#content a, #content a:link, #content a:visited {
 	color: #FFF;
 }
 
-.product a:hover {
+#content a:hover {
 	color: #B3E07B;
+}
+
+#content .formEntry {
+	margin-bottom: 10px;
+}
+
+#content .formEntry .label {
+	display: inline-block;
+	width: 100px;
+}
+
+.product {
+	padding: 15px;
+	margin-bottom: 10px;
+}
+
+.product h3, .product h3 a, .product h3 a:link, .product h3 a:visited {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
 }
