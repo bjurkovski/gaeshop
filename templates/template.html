@@ -8,6 +8,7 @@
 		-->
 		<link rel="stylesheet" type="text/css" href="/static/css/style.css"/>		
 		<link rel="stylesheet" type="text/css" href="/static/css/Absolution/jquery.ui.all.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui-numeric.css"/>
 	</head>
 	<body>
 		<div id="header">
@@ -27,9 +28,11 @@
 		<script type="text/javascript" src="/static/js/jquery-1.5.1.min.js"> </script>
 		<script type="text/javascript" src="/static/js/jquery.json-2.2.min.js"> </script>
 		<script type="text/javascript" src="/static/js/jquery-ui-1.8.11.custom.min.js"> </script>
+		<script type="text/javascript" src="/static/js/jquery-ui-numeric-min.js"> </script>
 		<script type="text/javascript">
 			$(document).ready(function () {
 				$(".button").button();
+				$('.quantitySpinner').numeric({emptyValue: false, minValue: 1, increment: 1});
 			});
 		</script>
 	</body>
