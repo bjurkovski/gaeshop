@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+		<!--
+		<link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon"/>
+		-->
+		<link rel="stylesheet" type="text/css" href="/static/css/style.css"/>		
+		<link rel="stylesheet" type="text/css" href="/static/css/Absolution/jquery.ui.all.css"/>
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href="#">Login</a></li>
+				<li><a href="#">Registrar</a></li>
+			</ul>
+		</div>
+
+		<div id="content">
+			{% block content %} {% endblock %}
+		</div>
+
+		<script type="text/javascript" src="/static/js/jquery-1.5.1.min.js"> </script>
+		<script type="text/javascript" src="/static/js/jquery.json-2.2.min.js"> </script>
+		<script type="text/javascript" src="/static/js/jquery-ui-1.8.11.custom.min.js"> </script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$(".button").button();
+			});
+		</script>
+	</body>
+</html>
