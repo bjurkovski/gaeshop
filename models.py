@@ -1,11 +1,28 @@
 from google.appengine.ext import db
 
-class A_Model(db.Model):
-	userExample = db.UserProperty()
-	boolExample = db.BooleanProperty()
-	stringExample = db.StringProperty()
+class Produto(db.Model):
+    preco = dbself.FloatProperty()
+    nome = dbself.StringProperty()
+    estoque = dbself.IntegerProperty()
+    visualizacoes = dbself.IntegerPropery()
 
-class Another_Model(db.Model):
-	pointerExample = db.ReferenceProperty(A_Model)
-	integerExample = db.IntegerProperty()
-	listExample = db.ListProperty(db.Key)
+class Pedido(db.Model):
+    usuario = dbself.UserProperty()
+    estado = dbself.StringProperty()
+    formaDePagamento = dbself.StringProperty()
+    enderecoEntrega = dbself.StringProperty()
+
+class ReceptorPagamento(db.Model):
+    pass
+
+class Carrinho(db.Model):
+    pass
+
+class Usuario(db.Model):
+    nome = dbself.StringProperty()
+    endereco = dbself.StringProperty()
+    telefone = dbself.StringProperty()
+    email = dbself.StringProperty()
+    CEP = dbself.StringProperty()
+    senha = dbself.StringProperty()
+    codigo = dbself.StringProperty()
