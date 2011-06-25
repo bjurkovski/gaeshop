@@ -48,6 +48,8 @@ class ViewProduct(webapp.RequestHandler):
 
 		try:
 			product = Product.get(Key(productId))
+			if product:
+				product.addView()
 		except:
 			product = None
 
@@ -60,17 +62,33 @@ class ViewProduct(webapp.RequestHandler):
 
 		self.response.out.write(template.render(TEMPLATES_DIR + "viewProduct.html", param))
 
+class ViewOrders(webapp.RequestHandler):
+	def get(self):
+		user = users.get_current_user()
+		isAdmin = users.is_current_user_admin()
+
+		if isAdmin:
+			param = {'user': user,
+					 'isAdmin': isAdmin,
+					 'loginURL': users.create_login_url("/"),
+					 'logoutURL': users.create_logout_url("/")
+					}
+
+			self.response.out.write(template.render(TEMPLATES_DIR + "viewOrders.html", param))
+
 class RegisterProduct(webapp.RequestHandler):
 	def get(self):
 		user = users.get_current_user()
+		isAdmin = users.is_current_user_admin()
 
-		param = {'user': user,
-				 'isAdmin': users.is_current_user_admin(),
-				 'loginURL': users.create_login_url("/"),
-				 'logoutURL': users.create_logout_url("/")
-				}
+		if isAdmin:
+			param = {'user': user,
+					 'isAdmin': isAdmin,
+					 'loginURL': users.create_login_url("/"),
+					 'logoutURL': users.create_logout_url("/")
+					}
 
-		self.response.out.write(template.render(TEMPLATES_DIR + "registerProduct.html", param))
+			self.response.out.write(template.render(TEMPLATES_DIR + "registerProduct.html", param))
 
 	def post(self):
 		user = users.get_current_user()
@@ -108,6 +126,10 @@ class RegisterCartItem(webapp.RequestHandler):
 
 		return self.response.out.write(json.dumps(retData))
 
+class RegisterOrder(webapp.RequestHandler):
+	def post(self):
+		user = users.get_current_user()
+
 class Admin(webapp.RequestHandler):
 	def get(self):
 		user = users.get_current_user()
@@ -128,8 +150,10 @@ application = webapp.WSGIApplication(
 									 ('/', Home),
 									 ('/view/cart', ViewCart),
 									 ('/view/product/([^/]+)', ViewProduct),
+									 ('/view/orders', ViewOrders),
 									 ('/register/product', RegisterProduct),
 									 ('/register/cart_item', RegisterCartItem),
+									 ('/register/order', RegisterOrder),
 									 ('/admin', Admin),
 									 ('/.*', Home)
 									],

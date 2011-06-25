@@ -1,7 +1,7 @@
 var shop = {
 	init: function() {
 		$(document).ready(function () {
-			$(".button").button();
+			$("button").button();
 			$('.quantitySpinner').numeric({emptyValue: false, minValue: 0, increment: 1});;
 			$('.priceSpinner').numeric({emptyValue: false,
 										minValue: 0,
@@ -10,6 +10,16 @@ var shop = {
 										currencySymbol: 'R$',
 										format: { format: '0.00', decimalChar: '.', thousandsChar: ',' }
 			});
+			$("li.hasHiddenMenu").each(function () {
+					$(this).hover(
+						function () {
+							$("ul.hiddenMenu", this).show();
+						},
+						function () {
+							$("ul.hiddenMenu", this).hide();
+						}
+					);
+				});
 		});
 	},
 
@@ -50,7 +60,7 @@ var shop = {
 		if(!this.waitingResponse) {
 			this.waitingResponse = true;
 			var instance = this;
-			$.ajax({url: "/register/product",
+			$.ajax({url: "/register/cart_item",
 					type: 'POST',
 					data: {json: JSONstring},
 					dataType: 'json',

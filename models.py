@@ -22,6 +22,7 @@ class Product(db.Model):
 
 	def addView(self):
 		self.views += 1
+		self.put()
 
 class Order(db.Model):
 	user = db.UserProperty()

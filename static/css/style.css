@@ -19,7 +19,10 @@ body {
 
 #header {
 	width: 100%;
-	padding: 15px 0 30px 0;
+	height: 40px;
+	margin: 0;
+	padding: 0;
+	/*padding: 15px 0 30px 0;*/
 	background-color: #222;
 	border-bottom: solid 1px #555;
 	color: #AAA;
@@ -29,7 +32,7 @@ body {
 
 #header img#logo {
 	padding: 0;
-	margin: -10px 0 0 20px;
+	margin: 0px 0 0 20px;
 	position: absolute;
 }
 
@@ -47,7 +50,7 @@ body {
 #header ul li {
 	position: relative;
 	float: right;
-	padding: 0;
+	padding: 12px 0 12px 0;
 	margin-right: 10px;
 }
 
@@ -58,6 +61,31 @@ body {
 
 #header ul li a:hover {
 	color: #B3E07B;
+}
+
+#header ul li ul {
+	width: 135px;
+	list-style: none;
+	position: absolute;
+	padding: 5px;
+	float: left;
+	display: none;
+
+	background: #222;
+	border: solid 1px #555;
+	border-top: none;
+
+	top: 40px;
+	font-size: 12px;
+}
+
+#header ul li ul li {
+	float: left;
+	padding: 0;
+	padding-bottom: 3px;
+}
+
+#header ul li ul li a {
 }
 
 #content {
