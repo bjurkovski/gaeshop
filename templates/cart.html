@@ -3,6 +3,21 @@
 {% block content %}
 
 <h1>Carrinho de Compras</h1>
+<table>
+	<tr>
+		<th>Produto</th>
+		<th>Quantidade</th>
+		<th>Preço (Unidade)</th>
+		<th>Sub-total</th>
+	</tr>
+	<!-- put this inside a 'for' with cart data coming from server -->
+	<tr>
+		<td><a href="#">Bola de Futebol</a></td>
+		<td>1</td>
+		<td>R$ 10</td>
+		<td>R$ 10</td>
+	</tr>
+</table>
 <button onclick="void(0);">Efetuar Compra</button>
 
 {% endblock %}

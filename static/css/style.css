@@ -60,7 +60,7 @@ body {
 }
 
 #header ul li a:hover {
-	color: #B3E07B;
+	color: #b0c852;
 }
 
 #header ul li ul {
@@ -104,7 +104,7 @@ body {
 }
 
 #content a:hover {
-	color: #B3E07B;
+	color: #b0c852;
 }
 
 #content .twoColumns {
@@ -125,4 +125,23 @@ body {
 	margin: 0;
 	padding: 0;
 	text-decoration: none;
+}
+
+table {
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	background-color: #222;
+}
+
+table, th, td {
+	border: 1px solid #555;
+	text-align: center;
+}
+
+th {
+	background-color: #046496;
+}
+
+th, td {
+	padding: 5px 10px 5px 10px;
 }
