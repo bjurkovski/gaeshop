@@ -79,11 +79,11 @@ body {
 	color: #B3E07B;
 }
 
-#content .formEntry {
+#content .twoColumns {
 	margin-bottom: 10px;
 }
 
-#content .formEntry .label {
+#content .twoColumns .label {
 	display: inline-block;
 	width: 100px;
 }

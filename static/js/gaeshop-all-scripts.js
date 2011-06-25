@@ -14,16 +14,52 @@ var shop = {
 	},
 
 	registerProduct: function() {
-		var instance = this;
-		$.ajax({url: "/register/product",
-				type: 'POST',
-				data: {name: $("#productName").val(), price: $("#productPrice").val(), description: $("#productDescription").val()},
-				dataType: 'json',
-				success: function(json) {
-					instance.attr = true;
-		  		}
-		});
+		json = new Object;
+		json.name = $("#productName").val();
+		json.price = $("#productPrice").val();
+		json.description = $("#productDescription").val();
+		json.stock = $("#productStock").val();
+
+		var JSONstring = $.toJSON(json);
+
+		if(!this.waitingResponse) {
+			this.waitingResponse = true;
+			var instance = this;
+			$.ajax({url: "/register/product",
+					type: 'POST',
+					data: {json: JSONstring},
+					dataType: 'json',
+					success: function(json) {
+						if(json.success)
+							alert("Produto inserido com sucesso!");
+						else
+							alert("Erro ao inserir produto!");
+						instance.waitingResponse = false;
+			  		}
+			});
+		}
 	},
+
+	addToCart: function(product) {
+		json = new Object;
+		json.key = product;
+		json.quantity = $("#quantity_"+product).val();
+
+		var JSONstring = $.toJSON(json);
+
+		if(!this.waitingResponse) {
+			this.waitingResponse = true;
+			var instance = this;
+			$.ajax({url: "/register/product",
+					type: 'POST',
+					data: {json: JSONstring},
+					dataType: 'json',
+					success: function(json) {
+						instance.waitingResponse = false;
+			  		}
+			});
+		}
+	}
 };
 
 shop.init();

@@ -2,9 +2,22 @@
 
 {% block content %}
 
-<h1>Produto</h1>
-<span class="label">Descrição</span>
-<span class="label">Preço</span>
+{% if product %}
+	<h1>{{ product.name }}</h1>
+	<div class="twoColumns">
+		<span class="label">Descrição</span> {{ product.description }}
+		<br/>
+		<span class="label">Preço</span> <span class="price">R$ {{ product.price }}</span>
+		<br/>
+		<span class="label">Visualizações</span> {{ product.views }}
+		<br/>
+	{% if isAdmin %}
+		<span class="label">Estoque</span> {{ product.stock }}
+	{% endif %}
+	</div>
+{% else %}
+	<h1>Produto Inválido</h1>
+{% endif %}
 
 {% endblock %}
 

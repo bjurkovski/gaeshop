@@ -1,11 +1,15 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 import os
+import urllib
+from django.utils import simplejson as json
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
+
+from google.appengine.ext.db import Key
 
 from models import *
 
@@ -15,10 +19,13 @@ class Home(webapp.RequestHandler):
 	def get(self):
 		user = users.get_current_user()
 
+		products = Product.all()
+
 		param = {'user': user,
 				 'isAdmin': users.is_current_user_admin(),
 				 'loginURL': users.create_login_url("/"),
-				 'logoutURL': users.create_logout_url("/")
+				 'logoutURL': users.create_logout_url("/"),
+				 'products': products
 				}
 
 		self.response.out.write(template.render(TEMPLATES_DIR + "main.html", param))
@@ -37,7 +44,21 @@ class ViewCart(webapp.RequestHandler):
 
 class ViewProduct(webapp.RequestHandler):
 	def get(self, productId):
-		productId = urllib.unquote(urllib.unquote(kind))
+		productId = urllib.unquote(urllib.unquote(productId))
+
+		try:
+			product = Product.get(Key(productId))
+		except:
+			product = None
+
+		param = {'user': users.get_current_user(),
+				 'isAdmin': users.is_current_user_admin(),
+				 'loginURL': users.create_login_url("/"),
+				 'logoutURL': users.create_logout_url("/"),
+				 'product': product
+				}
+
+		self.response.out.write(template.render(TEMPLATES_DIR + "viewProduct.html", param))
 
 class RegisterProduct(webapp.RequestHandler):
 	def get(self):
@@ -52,7 +73,40 @@ class RegisterProduct(webapp.RequestHandler):
 		self.response.out.write(template.render(TEMPLATES_DIR + "registerProduct.html", param))
 
 	def post(self):
-		return
+		user = users.get_current_user()
+		isAdmin = users.is_current_user_admin()
+
+		retData = {"success": False, "message": "Not an Admin."}
+		if isAdmin:
+			data = json.loads(self.request.get("json"))
+			if data and float(data["price"])>=0 and int(data["stock"])>=0:
+				product = Product()
+				product.create(data["name"], data["description"], float(data["price"]), int(data["stock"]))
+				product.put()
+				retData = {"success": True}
+			else:
+				retData["message"] = "Invalid values."
+
+		return self.response.out.write(json.dumps(retData))
+
+class RegisterCartItem(webapp.RequestHandler):
+	def post(self):
+		user = users.get_current_user()
+
+		retData = {"success": False, "message": "Not logged in."}
+		if user:
+			data = json.loads(self.request.get("json"))
+			if data:
+				product = Product.get(Key(data["key"]))
+				quantity = int(data["quantity"])
+
+#				product = Product()
+#				product.put()
+				retData = {"success": True}
+			else:
+				retData["message"] = "Invalid values."
+
+		return self.response.out.write(json.dumps(retData))
 
 class Admin(webapp.RequestHandler):
 	def get(self):
@@ -75,6 +129,7 @@ application = webapp.WSGIApplication(
 									 ('/view/cart', ViewCart),
 									 ('/view/product/([^/]+)', ViewProduct),
 									 ('/register/product', RegisterProduct),
+									 ('/register/cart_item', RegisterCartItem),
 									 ('/admin', Admin),
 									 ('/.*', Home)
 									],

@@ -5,27 +5,18 @@
 <h1>Página Inicial</h1>
 <!--<a class="button">teste</a>-->
 
+{% for p in products %}
 <div class="product">
 	<!-- image -->
-	<h3><a href="#">Nome</a></h3>
+	<h3><a href="/view/product/{{ p.key }}">{{ p.name }}</a></h3>
 	<p>
-		Descrição aqui. Hehehe. Lalala. Um Produto
+		{{ p.description }}
 	</p>
-	<span class="price">R$ 10,00</span>
-	<input type="text" class="quantitySpinner" size="2"/>
-	<a href="#">Adicionar ao carrinho</a>
+	<span class="price">R$ {{ p.price }}</span>
+	<input type="text" class="quantitySpinner" id="quantity_{{ p.key }}" size="2"/>
+	<a href="javascript:void(0);" onclick="shop.addToCart('{{ p.key }}');">Adicionar ao carrinho</a>
 </div>
-
-<div class="product">
-	<!-- image -->
-	<h3><a href="#">Nome</a></h3>
-	<p>
-		Descrição aqui. Hehehe. Lalala. Um Produto
-	</p>
-	<span class="price">R$ 10,00</span>
-	<input type="text" class="quantitySpinner" size="2"/>
-	<a href="#">Adicionar ao carrinho</a>
-</div>
+{% endfor %}
 
 {% endblock %}
 
