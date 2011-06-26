@@ -25,7 +25,8 @@ class Home(webapp.RequestHandler):
 				 'isAdmin': users.is_current_user_admin(),
 				 'loginURL': users.create_login_url("/"),
 				 'logoutURL': users.create_logout_url("/"),
-				 'products': products
+				 'products': products,
+				 'cartNumber' : CartItem.all().filter('user =', user).count()
 				}
 
 		self.response.out.write(template.render(TEMPLATES_DIR + "main.html", param))
@@ -34,10 +35,13 @@ class ViewCart(webapp.RequestHandler):
 	def get(self):
 		user = users.get_current_user()
 
+		itens = CartItem.all()
+
 		param = {'user': user,
 				 'isAdmin': users.is_current_user_admin(),
 				 'loginURL': users.create_login_url("/"),
-				 'logoutURL': users.create_logout_url("/")
+				 'logoutURL': users.create_logout_url("/"),
+				 'itens' : itens
 				}
 
 		self.response.out.write(template.render(TEMPLATES_DIR + "cart.html", param))
@@ -115,11 +119,10 @@ class RegisterCartItem(webapp.RequestHandler):
 		if user:
 			data = json.loads(self.request.get("json"))
 			if data:
-				cart = ShoppingCart.get(Key(user.cart))
+				item = CartItem()
 				product = Product.get(Key(data["key"]))
 				quantity = int(data["quantity"])
-				cart.addProduct(product,quantity)
-				cart.put()
+				item.create(user,product,quantity)
 				retData = {"success": True}
 			else:
 				retData["message"] = "Invalid values."

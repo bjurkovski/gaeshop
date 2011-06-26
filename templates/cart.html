@@ -11,12 +11,15 @@
 		<th>Sub-total</th>
 	</tr>
 	<!-- put this inside a 'for' with cart data coming from server -->
+{% for item in itens %}
 	<tr>
-		<td><a href="#">Bola de Futebol</a></td>
-		<td>1</td>
-		<td>R$ 10</td>
-		<td>R$ 10</td>
+		<td><a href="#">{{ item.product.name }}</a></td>
+		<td>{{ item.quantity }}</td>
+		<td>{{ item.product.price }}</td>
+		<td>{{ item.totalPrice }}</td>
 	</tr>
+{% endfor %}
+
 </table>
 <button onclick="void(0);">Efetuar Compra</button>
 

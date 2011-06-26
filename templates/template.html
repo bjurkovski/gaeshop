@@ -7,7 +7,7 @@
 		<!--
 		<link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon"/>
 		-->
-		<link rel="stylesheet" type="text/css" href="/static/css/style.css"/>		
+		<link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
 		<link rel="stylesheet" type="text/css" href="/static/css/Absolution/jquery.ui.all.css"/>
 		<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui-numeric.css"/>
 	</head>
@@ -28,7 +28,7 @@
 						</ul>
 					</li>
 					{% endif %}
-				<li><a href="/view/cart">Carrinho (0 itens)</a></li>
+				<li><a href="/view/cart">Carrinho ({{cartNumber}} itens)</a></li>
 				{% else %}
 				<li><a href="https://www.google.com/accounts/NewAccount" target="_blank">Registrar</a></li>
 				<li><a href="{{ loginURL }}">Login</a></li>
