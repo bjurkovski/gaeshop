@@ -35,7 +35,7 @@ class ViewCart(webapp.RequestHandler):
 	def get(self):
 		user = users.get_current_user()
 
-		itens = CartItem.all()
+		itens = CartItem.all().filter('user =', user)
 
 		param = {'user': user,
 				 'isAdmin': users.is_current_user_admin(),

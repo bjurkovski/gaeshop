@@ -43,9 +43,12 @@ class CartItem(db.Model):
 		return self.product.price*self.quantity
 
 	def create(self,user,product,quantity):
+		if quantity == 0:
+			return False
+
 		alreadyAdded = False
 		for item in CartItem.all().filter('user =', user):
-			if item.product == product:
+			if item.product.key() == product.key():
 				item.quantity += quantity
 				item.put()
 				alreadyAdded = True
