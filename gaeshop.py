@@ -115,11 +115,11 @@ class RegisterCartItem(webapp.RequestHandler):
 		if user:
 			data = json.loads(self.request.get("json"))
 			if data:
+				cart = ShoppingCart.get(Key(user.cart))
 				product = Product.get(Key(data["key"]))
 				quantity = int(data["quantity"])
-
-#				product = Product()
-#				product.put()
+				cart.addProduct(product,quantity)
+				cart.put()
 				retData = {"success": True}
 			else:
 				retData["message"] = "Invalid values."

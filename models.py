@@ -33,8 +33,33 @@ class Order(db.Model):
 class PaymentReceiver(db.Model):
 	pass
 
+class CartItem(db.Model):
+	product = db.ReferenceProperty(Product)
+	quantity = db.IntegerProperty()
+
+	def create(self,prod,quant):
+		self.product = prod
+		self.quantity = quant
+
 class ShoppingCart(db.Model):
-	def addProduct(self, product): 
+
+	cartItem = db.ReferenceProperty(CartItem, collection_name='cartItens' )
+
+	def addProduct(self, product,quantity):
+		alreadyAdded = False
+		for item in self.cartItems:
+			if item.product == product:
+				item.quantity += quantity
+				item.put()
+				alreadyAdded = True
+
+		if not alreadyAdded:
+			item = CartItem(product,quantity)
+			item.put()
+			self.product += item
+
+		self.cartItens.put()
+
 		return True
 
 	def getProducts(self):
@@ -48,10 +73,11 @@ class User(db.Model):
 	zipcode = db.StringProperty()
 	password = db.StringProperty()
 	code = db.StringProperty()
+	cart = db.ReferenceProperty(ShoppingCart)
 
 	def addProductToShoppingCart(self,product):
 		pass
-        
+
 	def getAccount(self):
 		pass
 
