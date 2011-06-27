@@ -63,7 +63,7 @@ class ViewProduct(webapp.RequestHandler):
 				 'loginURL': users.create_login_url("/"),
 				 'logoutURL': users.create_logout_url("/"),
 				 'product': product,
-				 'cartNumber' : CartItem.all().filter('user =', user).count()
+				 'cartNumber' : CartItem.all().filter('user =', users.get_current_user()).count()
 				}
 
 		self.response.out.write(template.render(TEMPLATES_DIR + "viewProduct.html", param))
@@ -94,7 +94,7 @@ class RegisterProduct(webapp.RequestHandler):
 					 'isAdmin': isAdmin,
 					 'loginURL': users.create_login_url("/"),
 					 'logoutURL': users.create_logout_url("/"),
-				 'cartNumber' : CartItem.all().filter('user =', user).count()
+					 'cartNumber' : CartItem.all().filter('user =', user).count()
 					}
 
 			self.response.out.write(template.render(TEMPLATES_DIR + "registerProduct.html", param))
@@ -158,6 +158,15 @@ class RegisterOrder(webapp.RequestHandler):
 
 		return self.response.out.write(json.dumps(retData))
 
+class GetCartInfo(webapp.RequestHandler):
+	def get(self):
+		user = users.get_current_user()
+
+		retData = {"success": False, "message": "Not logged in."}
+		if user:
+			retData = {"success": True, "size": CartItem.all().filter('user =', user).count()}
+
+		return self.response.out.write(json.dumps(retData))
 
 class Admin(webapp.RequestHandler):
 	def get(self):
@@ -184,6 +193,7 @@ application = webapp.WSGIApplication(
 									 ('/register/product', RegisterProduct),
 									 ('/register/cart_item', RegisterCartItem),
 									 ('/register/order', RegisterOrder),
+									 ('/get/cart_info', GetCartInfo),
 									 ('/admin', Admin),
 									 ('/.*', Home)
 									],

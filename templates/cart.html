@@ -12,7 +12,7 @@
 	</tr>
 	<!-- put this inside a 'for' with cart data coming from server -->
 {% for item in itens %}
-	<tr>
+	<tr class="cartItem">
 		<td><a href="/view/product/{{ item.product.key }}">{{ item.product.name }}</a></td>
 		<td>{{ item.quantity }}</td>
 		<td>{{ item.product.price }}</td>

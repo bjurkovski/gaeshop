@@ -90,8 +90,11 @@ var shop = {
 					data: {json: JSONstring},
 					dataType: 'json',
 					success: function(json) {
-						if(json.success)
+						if(json.success) {
+							$("#cartSize").html("0");
+							$(".cartItem").html("");
 							alert("Compra efetuada com sucesso!");
+						}
 						else
 							alert("Erro ao confirmar pedido.");
 						instance.waitingResponse = false;
@@ -115,6 +118,15 @@ var shop = {
 					data: {json: JSONstring},
 					dataType: 'json',
 					success: function(json) {
+						$.ajax({url: "/get/cart_info",
+								type: 'GET',
+								dataType: 'json',
+								success: function(info) {
+									if(info.success)
+										$("#cartSize").html(info.size);
+						  		}
+						});
+
 						instance.waitingResponse = false;
 			  		}
 			});
