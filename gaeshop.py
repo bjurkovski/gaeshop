@@ -133,6 +133,7 @@ class RegisterOrder(webapp.RequestHandler):
 	def post(self):
 		user = users.get_current_user()
 
+		retData = {"success": False, "message": "Not logged in."}
 		if user:
 			data = json.loads(self.request.get("json"))
 			if data:
@@ -146,6 +147,11 @@ class RegisterOrder(webapp.RequestHandler):
 					order.addItem(item.product,item.quantity)
 					order.put()
 					item.delete()
+				retData = {"success": True}
+			else:
+				retData["message"] = "Invalid values."
+
+		return self.response.out.write(json.dumps(retData))
 
 
 class Admin(webapp.RequestHandler):
