@@ -50,6 +50,31 @@ var shop = {
 		}
 	},
 
+	registerOrder: function() {
+		json = new Object;
+		json.paymentMethod = $("#paymentMethod").val();
+		json.shippingAddress = $("#shippingAddress").val();
+
+		var JSONstring = $.toJSON(json);
+
+		if(!this.waitingResponse) {
+			this.waitingResponse = true;
+			var instance = this;
+			$.ajax({url: "/register/order",
+					type: 'POST',
+					data: {json: JSONstring},
+					dataType: 'json',
+					success: function(json) {
+						if(json.success)
+							alert("Compra feita magrao");
+						else
+							alert("Oooops");
+						instance.waitingResponse = false;
+			  		}
+			});
+		}
+	},
+
 	addToCart: function(product) {
 		json = new Object;
 		json.key = product;

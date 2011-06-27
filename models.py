@@ -26,9 +26,29 @@ class Product(db.Model):
 
 class Order(db.Model):
 	user = db.UserProperty()
-	state = db.StringProperty()
 	paymentMethod = db.StringProperty()
 	shippingAddress = db.StringProperty()
+	state = db.StringProperty()
+
+	def create(self,user,paymentMethod=None,shippingAddress=None,state='Wait'):
+		self.user = user
+		self.paymentMethod = paymentMethod
+		self.shippingAddress = shippingAddress
+		self.state = state
+
+	def addItem(self,product,quantity):
+		item = OrderItem()
+		item.product = product
+		item.quantity = quantity
+		item.orderCode = self
+		item.put()
+
+class OrderItem(db.Model):
+
+	product = db.ReferenceProperty(Product)
+	quantity = db.IntegerProperty()
+	orderCode = db.ReferenceProperty()
+
 
 class PaymentReceiver(db.Model):
 	pass

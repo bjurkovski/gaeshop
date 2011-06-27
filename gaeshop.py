@@ -133,6 +133,21 @@ class RegisterOrder(webapp.RequestHandler):
 	def post(self):
 		user = users.get_current_user()
 
+		if user:
+			data = json.loads(self.request.get("json"))
+			if data:
+				itens = CartItem.all().filter('user =', user)
+				order = Order()
+				#data for payment and address should be here, for now it uses
+				order.create(user,data["paymentMethod"],data["shippingAddress"])
+				order.put()
+
+				for item in itens:
+					order.addItem(item.product,item.quantity)
+					order.put()
+					item.delete()
+
+
 class Admin(webapp.RequestHandler):
 	def get(self):
 		user = users.get_current_user()
