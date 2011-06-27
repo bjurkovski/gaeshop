@@ -1,0 +1,6 @@
+
+# Mudanças do projeto original
+
+O modelo Carrinho foi substituito por um modelo chamado ItemCarrinho, representando um produto e uma quantidade deste. Cada usuários pode estar relacionado a vários ItemCarrinho.
+
+De maneira similar foi criado um ItemPedido que é uma versão do ItemCarrinho, porém relacionada a cada Pedido. Desta forma após uma compra os produtos são deletados do carrinho e persistidos sob a forma de um Pedido e vários ItemPedido.
