@@ -41,7 +41,8 @@ class ViewCart(webapp.RequestHandler):
 				 'isAdmin': users.is_current_user_admin(),
 				 'loginURL': users.create_login_url("/"),
 				 'logoutURL': users.create_logout_url("/"),
-				 'itens' : itens
+				 'itens' : itens,
+				 'cartNumber' : CartItem.all().filter('user =', user).count()
 				}
 
 		self.response.out.write(template.render(TEMPLATES_DIR + "cart.html", param))
@@ -61,7 +62,8 @@ class ViewProduct(webapp.RequestHandler):
 				 'isAdmin': users.is_current_user_admin(),
 				 'loginURL': users.create_login_url("/"),
 				 'logoutURL': users.create_logout_url("/"),
-				 'product': product
+				 'product': product,
+				 'cartNumber' : CartItem.all().filter('user =', user).count()
 				}
 
 		self.response.out.write(template.render(TEMPLATES_DIR + "viewProduct.html", param))
@@ -75,7 +77,9 @@ class ViewOrders(webapp.RequestHandler):
 			param = {'user': user,
 					 'isAdmin': isAdmin,
 					 'loginURL': users.create_login_url("/"),
-					 'logoutURL': users.create_logout_url("/")
+					 'logoutURL': users.create_logout_url("/"),
+					 'cartNumber' : CartItem.all().filter('user =', user).count(),
+					 'orders': Order.all()
 					}
 
 			self.response.out.write(template.render(TEMPLATES_DIR + "viewOrders.html", param))
@@ -89,7 +93,8 @@ class RegisterProduct(webapp.RequestHandler):
 			param = {'user': user,
 					 'isAdmin': isAdmin,
 					 'loginURL': users.create_login_url("/"),
-					 'logoutURL': users.create_logout_url("/")
+					 'logoutURL': users.create_logout_url("/"),
+				 'cartNumber' : CartItem.all().filter('user =', user).count()
 					}
 
 			self.response.out.write(template.render(TEMPLATES_DIR + "registerProduct.html", param))
@@ -140,7 +145,7 @@ class RegisterOrder(webapp.RequestHandler):
 				itens = CartItem.all().filter('user =', user)
 				order = Order()
 				#data for payment and address should be here, for now it uses
-				order.create(user,data["paymentMethod"],data["shippingAddress"])
+				order.create(user, data["paymentMethod"], data["shippingAddress"])
 				order.put()
 
 				for item in itens:
@@ -163,7 +168,8 @@ class Admin(webapp.RequestHandler):
 			param = {'user': user,
 					 'isAdmin': isAdmin,
 					 'loginURL': users.create_login_url("/"),
-					 'logoutURL': users.create_logout_url("/")
+					 'logoutURL': users.create_logout_url("/"),
+					 'cartNumber' : CartItem.all().filter('user =', user).count()
 					}
 
 			self.response.out.write(template.render(TEMPLATES_DIR + "admin.html", param))

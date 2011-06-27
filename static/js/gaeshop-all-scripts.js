@@ -19,7 +19,13 @@ var shop = {
 							$("ul.hiddenMenu", this).hide();
 						}
 					);
-				});
+			});
+			$('#popupDialog').dialog({
+				autoOpen: false,
+				closeOnEscape: false,
+				width: 600,
+				zIndex: 3000
+			});
 		});
 	},
 
@@ -51,6 +57,25 @@ var shop = {
 	},
 
 	registerOrder: function() {
+		var instance = this;
+		$("#popupDialog").dialog("option", "buttons", {
+			"Confirmar": function() {
+					instance.requestOrderRegistration();
+					$(this).dialog("close");
+			},
+			"Cancelar": function() {
+					$(this).dialog("close");
+			}
+		});
+		$("#popupDialog").dialog("option", "modal", true);
+		$("#popupDialog").dialog("option", "title", "Informações de Compra");
+		var content = "Endereço de Entrega: <input type='text' id='shippingAddress'/><br/>"
+					+ "Forma de Pagamento: <input type='text' id='paymentMethod'/>";
+		$("#popupDialog").html(content);
+		$('#popupDialog').dialog('open');
+	},
+
+	requestOrderRegistration: function() {
 		json = new Object;
 		json.paymentMethod = $("#paymentMethod").val();
 		json.shippingAddress = $("#shippingAddress").val();
@@ -66,9 +91,9 @@ var shop = {
 					dataType: 'json',
 					success: function(json) {
 						if(json.success)
-							alert("Compra feita magrao");
+							alert("Compra efetuada com sucesso!");
 						else
-							alert("Oooops");
+							alert("Erro ao confirmar pedido.");
 						instance.waitingResponse = false;
 			  		}
 			});

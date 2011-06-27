@@ -5,16 +5,20 @@
 <h1>Pedidos</h1>
 <table>
 	<tr>
-		<th>Pedido</th>
 		<th>Cliente</th>
 		<th>Status</th>
+		<th>Endereço de Entrega</th>
+		<th>Modo de Pagamento</th>
 	</tr>
 	<!-- put this inside a 'for' with cart data coming from server -->
+{% for order in orders %}
 	<tr>
-		<td>#1</td>
-		<td>Cliente 1</td>
-		<td>Processando</td>
+		<td>{{ order.user }}</td>
+		<td>{{ order.state }}</td>
+		<td>{{ order.shippingAddress }}</td>
+		<td>{{ order.paymentMethod }}</td>
 	</tr>
+{% endfor %}
 </table>
 
 {% endblock %}
