@@ -49,7 +49,7 @@ var shop = {
 						if(json.success)
 							alert("Produto inserido com sucesso!");
 						else
-							alert("Erro ao inserir produto!");
+							alert("Erro ao inserir produto! Erro: " + json.message);
 						instance.waitingResponse = false;
 			  		}
 			});

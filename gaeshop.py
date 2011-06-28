@@ -99,6 +99,11 @@ class RegisterProduct(webapp.RequestHandler):
 
 			self.response.out.write(template.render(TEMPLATES_DIR + "registerProduct.html", param))
 
+	def validInput(self, data):
+		if data["name"] != "" and data["price"] != "" and data["description"] != "" and data["stock"] != "":
+			return True
+		return False
+
 	def post(self):
 		user = users.get_current_user()
 		isAdmin = users.is_current_user_admin()
@@ -106,7 +111,7 @@ class RegisterProduct(webapp.RequestHandler):
 		retData = {"success": False, "message": "Not an Admin."}
 		if isAdmin:
 			data = json.loads(self.request.get("json"))
-			if data and float(data["price"])>=0 and int(data["stock"])>=0:
+			if data and self.validInput(data) and float(data["price"])>=0 and int(data["stock"])>=0:
 				product = Product()
 				product.create(data["name"], data["description"], float(data["price"]), int(data["stock"]))
 				product.put()
