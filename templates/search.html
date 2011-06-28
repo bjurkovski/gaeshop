@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+
+{% block content %}
+
+<h1>Resultados da Busca ({{ numResults }} resultado(s) encontrado(s))</h1>
+{% if products %}
+	{% for p in products %}
+	<div class="product">
+		<!-- image -->
+		<h3><a href="/view/product/{{ p.key }}">{{ p.name }}</a></h3>
+		<p>
+			{{ p.description }}
+		</p>
+		<span class="price">R$ {{ p.price }}</span>
+		<input type="text" class="quantitySpinner" id="quantity_{{ p.key }}" size="2"/>
+		<a href="javascript:void(0);" onclick="shop.addToCart('{{ p.key }}');">Adicionar ao carrinho</a>
+	</div>
+	{% endfor %}
+{% else %}
+	Nenhum resultado encontrado.
+{% endif %}
+
+{% endblock %}
+

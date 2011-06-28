@@ -18,7 +18,12 @@ class Product(db.Model):
 		return self.stock
 
 	def match(self, search):
-		return True
+		words = search.lower().split(" ")
+		myWords = self.name.lower().split(" ")
+		for mw in myWords:
+			if mw in words:
+				return True
+		return False
 
 	def addView(self):
 		self.views += 1

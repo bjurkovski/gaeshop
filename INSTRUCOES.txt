@@ -1,0 +1,14 @@
+# Instruções para deployment
+# Arthur Burigo, Bruno Jurkovski e Lucas Zawacki
+
+1. Baixar e instalar algumas das versões 2.x do Python:
+http://www.python.org/
+
+2. Baixar e instalar o SDK do Google App Engine:
+http://code.google.com/appengine/downloads.html
+
+3. Execução:
+3.1 Windows - Executar o Google App Engine Launcher, escolher a pasta da aplicação, e clicar em "Run"
+3.2 Linux - Ir até a pasta onde o SDK foi descompactado e digitar: ./dev_appserver.py caminho_da_aplicação
+
+4. Abrir seu navegador favorito no endereço http://localhost:8080

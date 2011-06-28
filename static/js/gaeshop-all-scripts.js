@@ -29,6 +29,11 @@ var shop = {
 		});
 	},
 
+	searchProduct: function() {
+		q = encodeURI($("#searchBox").val());
+		window.location.replace("/search?q="+q);
+	},
+
 	registerProduct: function() {
 		json = new Object;
 		json.name = $("#productName").val();
