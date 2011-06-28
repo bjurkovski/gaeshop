@@ -158,11 +158,15 @@ class RegisterOrder(webapp.RequestHandler):
 
 					for item in itens:
 						qty = min(item.quantity, item.product.stock)
-						order.addItem(item.product, qty)
-						order.put()
-						item.delete()
-						receipt += (item.product.name, qty)
-					retData = {"success": True, "receipt": receipt}
+						if qty > 0:
+							order.addItem(item.product, qty)
+							order.put()
+							item.delete()
+							receipt += (item.product.name, qty)
+					if len(receipt) > 0:
+						retData = {"success": True, "receipt": receipt}
+					else:
+						retData["message"] = "Estoque Insuficiente."
 				else:
 					retData["message"] = "Nao ha nenhum produto no carrinho"
 
