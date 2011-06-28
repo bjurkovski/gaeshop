@@ -154,11 +154,15 @@ class RegisterOrder(webapp.RequestHandler):
 					order.create(user, data["paymentMethod"], data["shippingAddress"])
 					order.put()
 
+					receipt = []
+
 					for item in itens:
-						order.addItem(item.product,item.quantity)
+						qty = min(item.quantity, item.product.stock)
+						order.addItem(item.product, qty)
 						order.put()
 						item.delete()
-					retData = {"success": True}
+						receipt += (item.product.name, qty)
+					retData = {"success": True, "receipt": receipt}
 				else:
 					retData["message"] = "Nao ha nenhum produto no carrinho"
 
