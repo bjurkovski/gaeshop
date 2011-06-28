@@ -14,12 +14,11 @@
 {% for order in orders %}
 	<tr>
 		<td>{{ order.user }}</td>
-		<td>{{ order.state }}</td>
+		<td>{{ order.getState }}</td>
 		<td>{{ order.shippingAddress }}</td>
-		<td>{{ order.paymentMethod }}</td>
+		<td>{{ order.getPaymentMethod }}</td>
 	</tr>
 {% endfor %}
 </table>
 
 {% endblock %}
-

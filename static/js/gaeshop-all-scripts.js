@@ -79,7 +79,7 @@ var shop = {
 					+ "Forma de Pagamento:\
 <select id='paymentMethod'>\
 	<option value=\"card\">Cartão de Crédito</option>\
-	<option value=\"boleto\">Boleto Bancário</option>\
+	<option value=\"billet\">Boleto Bancário</option>\
 	<option value=\"paypal\">PayPal</option>\
 </select>\
 <br/>";

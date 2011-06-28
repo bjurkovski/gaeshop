@@ -29,8 +29,18 @@ class Order(db.Model):
 	paymentMethod = db.StringProperty()
 	shippingAddress = db.StringProperty()
 	state = db.StringProperty()
+	
+	def getState(self):
+		strings = { 'wait' : 'Em espera', 'paid' : 'Pago', 'canceled' : 'Cancelado'}
+		
+		return strings[self.state]
 
-	def create(self,user,paymentMethod=None,shippingAddress=None,state='Wait'):
+	def getPaymentMethod(self):
+		strings = { 'card' : 'Cartao de Credito', 'billet' : 'Boleto Bancario', 'paypal' : 'PayPal'}
+		
+		return strings[self.paymentMethod]
+
+	def create(self,user,paymentMethod=None,shippingAddress=None,state='wait'):
 		self.user = user
 		self.paymentMethod = paymentMethod
 		self.shippingAddress = shippingAddress
