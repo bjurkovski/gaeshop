@@ -105,10 +105,21 @@ var shop = {
 						if(json.success) {
 							$("#cartSize").html("0");
 							$(".cartItem").html("");
-							alert("Compra efetuada com sucesso!");
+							//alert("Compra efetuada com sucesso!");
+							$("#popupDialog").dialog("option", "buttons", {
+										"OK": function() { $(this).dialog("close"); }
+							});
+							$("#popupDialog").dialog("option", "modal", true);
+							$("#popupDialog").dialog("option", "title", "Compra efetuada com sucesso!");
+							var content = "";
+							for(var i=0; i<json.receipt.length; i++) {
+								content += json.receipt[i][1] + "x " + json.receipt[i][0] + "<br/>";
+							}
+							$("#popupDialog").html(content);
+							$('#popupDialog').dialog('open');
 						}
 						else
-							alert("Erro ao confirmar pedido.");
+							alert("Erro ao confirmar pedido. Erro: " + json.message);
 						instance.waitingResponse = false;
 			  		}
 			});
@@ -130,14 +141,25 @@ var shop = {
 					data: {json: JSONstring},
 					dataType: 'json',
 					success: function(json) {
-						$.ajax({url: "/get/cart_info",
-								type: 'GET',
-								dataType: 'json',
-								success: function(info) {
-									if(info.success)
-										$("#cartSize").html(info.size);
-						  		}
-						});
+						if(json.success) {
+							$.ajax({url: "/get/cart_info",
+									type: 'GET',
+									dataType: 'json',
+									success: function(info) {
+										if(info.success)
+											$("#cartSize").html(info.size);
+							  		}
+							});
+						}
+						else {
+							$("#popupDialog").dialog("option", "buttons", {
+										"OK": function() { $(this).dialog("close"); }
+							});
+							$("#popupDialog").dialog("option", "modal", true);
+							$("#popupDialog").dialog("option", "title", "Erro");
+							$("#popupDialog").html("Usuário deslogado. Faça login para efetuar esta operação.");
+							$('#popupDialog').dialog('open');
+						}
 
 						instance.waitingResponse = false;
 			  		}
