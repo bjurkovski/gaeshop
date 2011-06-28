@@ -187,6 +187,32 @@ class GetCartInfo(webapp.RequestHandler):
 
 		return self.response.out.write(json.dumps(retData))
 
+class Search(webapp.RequestHandler):
+	def get(self):
+		user = users.get_current_user()
+		isAdmin = users.is_current_user_admin()
+
+		queryStr = self.request.get("q")
+		if queryStr:
+			searchString = urllib.unquote(queryStr)
+
+			products = Product.all()
+			products = [p for p in products if p.match(searchString)]
+		else:
+			products = []
+
+		param = {'user': user,
+				 'isAdmin': isAdmin,
+				 'loginURL': users.create_login_url("/"),
+				 'logoutURL': users.create_logout_url("/"),
+				 'cartNumber' : CartItem.all().filter('user =', user).count(),
+				 'products': products,
+				 'numResults': len(products)
+				}
+
+		self.response.out.write(template.render(TEMPLATES_DIR + "search.html", param))
+		
+
 class Admin(webapp.RequestHandler):
 	def get(self):
 		user = users.get_current_user()
@@ -213,6 +239,7 @@ application = webapp.WSGIApplication(
 									 ('/register/cart_item', RegisterCartItem),
 									 ('/register/order', RegisterOrder),
 									 ('/get/cart_info', GetCartInfo),
+									 ('/search', Search),
 									 ('/admin', Admin),
 									 ('/.*', Home)
 									],

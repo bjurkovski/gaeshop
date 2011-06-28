@@ -17,6 +17,7 @@
 				<img id="logo" src="/static/img/logo.png" alt="Health++ SportShop" height="40px"/>
 			</a>
 			<ul>
+				<li style="margin-top: -6px;"><input type="text" id="searchBox" size="7"/> <a href="javascript:void(0);" onclick="shop.searchProduct();">Buscar</a></li>
 				{% if user %}
 				<li><a href="{{ logoutURL }}">Deslogar</a></li>
 					{% if isAdmin %}
