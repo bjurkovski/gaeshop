@@ -30,6 +30,9 @@ class Order(db.Model):
 	shippingAddress = db.StringProperty()
 	state = db.StringProperty()
 	
+	def getShipping(self):
+		return "R$ 15,00"
+
 	def getState(self):
 		strings = { 'wait' : 'Em espera', 'paid' : 'Pago', 'canceled' : 'Cancelado'}
 		

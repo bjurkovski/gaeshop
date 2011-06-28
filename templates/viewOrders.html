@@ -9,6 +9,7 @@
 		<th>Status</th>
 		<th>Endereço de Entrega</th>
 		<th>Modo de Pagamento</th>
+		<th>Frete</th>
 	</tr>
 	<!-- put this inside a 'for' with cart data coming from server -->
 {% for order in orders %}
@@ -17,6 +18,7 @@
 		<td>{{ order.getState }}</td>
 		<td>{{ order.shippingAddress }}</td>
 		<td>{{ order.getPaymentMethod }}</td>
+		<td>{{ order.getShipping }}</td>
 	</tr>
 {% endfor %}
 </table>
