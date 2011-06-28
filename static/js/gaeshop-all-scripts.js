@@ -46,8 +46,13 @@ var shop = {
 					data: {json: JSONstring},
 					dataType: 'json',
 					success: function(json) {
-						if(json.success)
+						if(json.success) {
+							$("#productName").val("");
+							$("#productPrice").val("");
+							$("#productDescription").val("");
+							$("#productStock").val("");
 							alert("Produto inserido com sucesso!");
+						}
 						else
 							alert("Erro ao inserir produto! Erro: " + json.message);
 						instance.waitingResponse = false;
