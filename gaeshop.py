@@ -140,19 +140,23 @@ class RegisterOrder(webapp.RequestHandler):
 
 		retData = {"success": False, "message": "Not logged in."}
 		if user:
+
 			data = json.loads(self.request.get("json"))
 			if data:
 				itens = CartItem.all().filter('user =', user)
-				order = Order()
-				#data for payment and address should be here, for now it uses
-				order.create(user, data["paymentMethod"], data["shippingAddress"])
-				order.put()
-
-				for item in itens:
-					order.addItem(item.product,item.quantity)
+				if CartItem.all().filter('user =', user).count() > 0:
+					order = Order()
+					order.create(user, data["paymentMethod"], data["shippingAddress"])
 					order.put()
-					item.delete()
-				retData = {"success": True}
+
+					for item in itens:
+						order.addItem(item.product,item.quantity)
+						order.put()
+						item.delete()
+					retData = {"success": True}
+				else:
+					retData["message"] = "Nao ha nenhum produto no carrinho"
+
 			else:
 				retData["message"] = "Invalid values."
 

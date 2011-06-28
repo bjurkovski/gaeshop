@@ -69,8 +69,20 @@ var shop = {
 		});
 		$("#popupDialog").dialog("option", "modal", true);
 		$("#popupDialog").dialog("option", "title", "Informações de Compra");
-		var content = "Endereço de Entrega: <input type='text' id='shippingAddress'/><br/>"
-					+ "Forma de Pagamento: <input type='text' id='paymentMethod'/>";
+		var content = "Endereço de Entrega: \
+<select id='shippingAddress'>\
+	<option value=\"first option\">Option 1</option>\
+	<option value=\"second option\">Option 2</option>\
+	<option value=\"third option\">Option 3</option>\
+</select>\
+<br/>"
+					+ "Forma de Pagamento: \
+<select id='paymentMethod'>\
+	<option value=\"first option\">Option 1</option>\
+	<option value=\"second option\">Option 2</option>\
+	<option value=\"third option\">Option 3</option>\
+</select>\
+<br/>";
 		$("#popupDialog").html(content);
 		$('#popupDialog').dialog('open');
 	},
