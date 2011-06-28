@@ -108,7 +108,7 @@ class RegisterProduct(webapp.RequestHandler):
 		user = users.get_current_user()
 		isAdmin = users.is_current_user_admin()
 
-		retData = {"success": False, "message": "Not an Admin."}
+		retData = {"success": False, "message": "Não é um administrador."}
 		if isAdmin:
 			data = json.loads(self.request.get("json"))
 			if data and self.validInput(data) and float(data["price"])>=0 and int(data["stock"])>=0:
@@ -117,7 +117,7 @@ class RegisterProduct(webapp.RequestHandler):
 				product.put()
 				retData = {"success": True}
 			else:
-				retData["message"] = "Invalid values."
+				retData["message"] = "Dados entrados são inválidos"
 
 		return self.response.out.write(json.dumps(retData))
 
@@ -125,7 +125,7 @@ class RegisterCartItem(webapp.RequestHandler):
 	def post(self):
 		user = users.get_current_user()
 
-		retData = {"success": False, "message": "Not logged in."}
+		retData = {"success": False, "message": "Nenhum usuário logado."}
 		if user:
 			data = json.loads(self.request.get("json"))
 			if data:
@@ -135,7 +135,7 @@ class RegisterCartItem(webapp.RequestHandler):
 				item.create(user,product,quantity)
 				retData = {"success": True}
 			else:
-				retData["message"] = "Invalid values."
+				retData["message"] = "Dados entrados são inválidos"
 
 		return self.response.out.write(json.dumps(retData))
 
@@ -173,7 +173,7 @@ class RegisterOrder(webapp.RequestHandler):
 					retData["message"] = "Nao há nenhum produto no carrinho"
 
 			else:
-				retData["message"] = "Dados inválidos entrados"
+				retData["message"] = "Dados entrados são inválidos"
 
 		return self.response.out.write(json.dumps(retData))
 
