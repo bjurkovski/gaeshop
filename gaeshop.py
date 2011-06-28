@@ -143,11 +143,11 @@ class RegisterOrder(webapp.RequestHandler):
 	def post(self):
 		user = users.get_current_user()
 
-		retData = {"success": False, "message": "Not logged in."}
+		retData = {"success": False, "message": "Nenhum usuário logado."}
 		if user:
 
 			data = json.loads(self.request.get("json"))
-			if data:
+			if data and len(data["shippingAddress"]) > 0:
 				itens = CartItem.all().filter('user =', user)
 				if CartItem.all().filter('user =', user).count() > 0:
 					order = Order()
@@ -168,10 +168,10 @@ class RegisterOrder(webapp.RequestHandler):
 					else:
 						retData["message"] = "Estoque Insuficiente."
 				else:
-					retData["message"] = "Nao ha nenhum produto no carrinho"
+					retData["message"] = "Nao há nenhum produto no carrinho"
 
 			else:
-				retData["message"] = "Invalid values."
+				retData["message"] = "Dados inválidos entrados"
 
 		return self.response.out.write(json.dumps(retData))
 
