@@ -67,29 +67,44 @@ var shop = {
 	},
 
 	registerOrder: function() {
-		var instance = this;
-		$("#popupDialog").dialog("option", "buttons", {
-			"Confirmar": function() {
-					instance.requestOrderRegistration();
-					$(this).dialog("close");
-			},
-			"Cancelar": function() {
-					$(this).dialog("close");
-			}
-		});
-		$("#popupDialog").dialog("option", "modal", true);
-		$("#popupDialog").dialog("option", "title", "Informações de Compra");
-		var content = "Endereço de Entrega: <input type='text' id='shippingAddress'><br/>"
+		if(!this.waitingResponse) {
+			this.waitingResponse = true;
+			var instance = this;
 
-					+ "Forma de Pagamento:\
-<select id='paymentMethod'>\
-	<option value=\"card\">Cartão de Crédito</option>\
-	<option value=\"billet\">Boleto Bancário</option>\
-	<option value=\"paypal\">PayPal</option>\
-</select>\
-<br/>";
-		$("#popupDialog").html(content);
-		$('#popupDialog').dialog('open');
+			var json = new Object;
+			json.address = $("#shippingAddress").val();
+			var JSONstring = $.toJSON(json);
+
+			$.ajax({url: "/get/shipping_info",
+					type: 'GET',
+					data: {json: JSONstring},
+					dataType: 'json',
+					success: function(json) {
+						if(json.success) {
+							$("#popupDialog").dialog("option", "buttons", {
+								"Confirmar": function() {
+									instance.waitingResponse = false;
+									instance.requestOrderRegistration();
+									$(this).dialog("close");
+								},
+								"Cancelar": function() {
+									instance.waitingResponse = false;
+									$(this).dialog("close");
+								}
+							});
+							$("#popupDialog").dialog("option", "modal", true);
+							$("#popupDialog").dialog("option", "title", "Deseja confirmar a compra?");
+							var content = "<b>Frete</b>: " + json.shipping;
+							$("#popupDialog").html(content);
+							$('#popupDialog').dialog('open');
+						}
+						else {
+							alert("Endereço inválido!");
+							instance.waitingResponse = false;
+						}
+					}
+			});
+		}
 	},
 
 	requestOrderRegistration: function() {
@@ -114,7 +129,7 @@ var shop = {
 							});
 							$("#popupDialog").dialog("option", "modal", true);
 							$("#popupDialog").dialog("option", "title", "Compra efetuada com sucesso!");
-							var content = "";
+							var content = "<b>Itens Incluidos:</b><br/>";
 							for(var i=0; i<json.receipt.length; i++) {
 								content += json.receipt[i][1] + "x " + json.receipt[i][0] + "<br/>";
 							}

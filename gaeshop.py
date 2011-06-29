@@ -42,7 +42,8 @@ class ViewCart(webapp.RequestHandler):
 				 'loginURL': users.create_login_url("/"),
 				 'logoutURL': users.create_logout_url("/"),
 				 'itens' : itens,
-				 'cartNumber' : CartItem.all().filter('user =', user).count()
+				 'cartNumber' : CartItem.all().filter('user =', user).count(),
+				 'totalPrice': sum([i.product.price * i.quantity for i in itens])
 				}
 
 		self.response.out.write(template.render(TEMPLATES_DIR + "cart.html", param))
@@ -191,6 +192,22 @@ class GetCartInfo(webapp.RequestHandler):
 
 		return self.response.out.write(json.dumps(retData))
 
+class GetShippingInfo(webapp.RequestHandler):
+	def get(self):
+		user = users.get_current_user()
+
+		retData = {"success": False, "message": "Not logged in."}
+		if user:
+			data = json.loads(self.request.get("json"))
+			if data and data["address"]:
+				sc = ShippingCalculator()
+				value = sc.compute(data["address"])
+				retData = {"success": True, "shipping": value}
+			else:
+				retData["message"] = "Parâmetros não recebidos."
+
+		return self.response.out.write(json.dumps(retData))
+
 class Search(webapp.RequestHandler):
 	def get(self):
 		user = users.get_current_user()
@@ -243,6 +260,7 @@ application = webapp.WSGIApplication(
 									 ('/register/cart_item', RegisterCartItem),
 									 ('/register/order', RegisterOrder),
 									 ('/get/cart_info', GetCartInfo),
+									 ('/get/shipping_info', GetShippingInfo),
 									 ('/search', Search),
 									 ('/admin', Admin),
 									 ('/.*', Home)

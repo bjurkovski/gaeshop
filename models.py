@@ -1,5 +1,9 @@
 from google.appengine.ext import db
 
+class ShippingCalculator:
+	def compute(self, address):
+		return 15.00
+
 class Product(db.Model):
 	name = db.StringProperty()
 	description = db.StringProperty()
@@ -36,7 +40,9 @@ class Order(db.Model):
 	state = db.StringProperty()
 	
 	def getShipping(self):
-		return "R$ 15,00"
+		sc = ShippingCalculator()
+		value = sc.compute(shippingAddress)
+		return "R$ " + str(value)
 
 	def getState(self):
 		strings = { 'wait' : 'Em espera', 'paid' : 'Pago', 'canceled' : 'Cancelado'}

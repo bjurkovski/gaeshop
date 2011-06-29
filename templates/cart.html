@@ -19,8 +19,20 @@
 		<td>{{ item.totalPrice }}</td>
 	</tr>
 {% endfor %}
-
 </table>
+
+Endereço de Entrega:
+<input type='text' id='shippingAddress'>
+<br/>
+Forma de Pagamento:
+<select id='paymentMethod'>
+	<option value=\"card\">Cartão de Crédito</option>
+	<option value=\"billet\">Boleto Bancário</option>
+	<option value=\"paypal\">PayPal</option>
+</select>
+<br/>
+Preço Total: R$ {{ totalPrice }}
+<br/><br/>
 <button href="javascript:void(0);" onclick="shop.registerOrder();">Efetuar Compra</button>
 
 {% endblock %}
