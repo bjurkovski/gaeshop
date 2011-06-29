@@ -6,7 +6,7 @@ class ShippingCalculator:
 
 class Product(db.Model):
 	name = db.StringProperty()
-	description = db.StringProperty()
+	description = db.TextProperty()
 	price = db.FloatProperty()
 	stock = db.IntegerProperty()
 	views = db.IntegerProperty()

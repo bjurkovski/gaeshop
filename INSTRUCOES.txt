@@ -12,3 +12,8 @@ http://code.google.com/appengine/downloads.html
 3.2 Linux - Ir até a pasta onde o SDK foi descompactado e digitar: ./dev_appserver.py caminho_da_aplicação
 
 4. Abrir seu navegador favorito no endereço http://localhost:8080
+
+5. Criamos, também, uma versão em produção, para facilitar os testes. Ela se encontra em:
+http://swe-gaeshop.appspot.com/
+
+Por questões de simplificação do protótipo, utilizamos autenticação com contas do google (a plataforma que utilizamos nos oferece isso) em vez do cadastro de usuários em um banco de dados próprio. Caso queira simular uma compra, basta, portanto, utilizar um email "@gmail".
