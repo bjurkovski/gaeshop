@@ -94,7 +94,7 @@ var shop = {
 							});
 							$("#popupDialog").dialog("option", "modal", true);
 							$("#popupDialog").dialog("option", "title", "Deseja confirmar a compra?");
-							var content = "<b>Frete</b>: " + json.shipping;
+							var content = "<b>Frete</b>: R$" + json.shipping;
 							$("#popupDialog").html(content);
 							$('#popupDialog').dialog('open');
 						}
