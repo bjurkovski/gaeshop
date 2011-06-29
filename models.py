@@ -42,7 +42,7 @@ class Order(db.Model):
 	
 	def getShipping(self):
 		sc = ShippingCalculator()
-		value = sc.compute(shippingAddress)
+		value = sc.compute(self.shippingAddress)
 		return value
 
 	def getState(self):
