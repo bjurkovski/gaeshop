@@ -24,6 +24,7 @@ class Product(db.Model):
 	def match(self, search):
 		words = search.lower().split(" ")
 		myWords = self.name.lower().split(" ")
+		myWords.extend(self.description.lower().split(" "))
 		for mw in myWords:
 			if mw in words:
 				return True
@@ -42,7 +43,7 @@ class Order(db.Model):
 	def getShipping(self):
 		sc = ShippingCalculator()
 		value = sc.compute(shippingAddress)
-		return "R$ " + str(value)
+		return value
 
 	def getState(self):
 		strings = { 'wait' : 'Em espera', 'paid' : 'Pago', 'canceled' : 'Cancelado'}
