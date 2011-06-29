@@ -53,9 +53,9 @@ var shop = {
 					success: function(json) {
 						if(json.success) {
 							$("#productName").val("");
-							$("#productPrice").val("");
+							$("#productPrice").val("0.00");
 							$("#productDescription").val("");
-							$("#productStock").val("");
+							$("#productStock").val("0");
 							alert("Produto inserido com sucesso!");
 						}
 						else
@@ -108,11 +108,9 @@ var shop = {
 					dataType: 'json',
 					success: function(json) {
 						if(json.success) {
-							$("#cartSize").html("0");
-							$(".cartItem").html("");
 							//alert("Compra efetuada com sucesso!");
 							$("#popupDialog").dialog("option", "buttons", {
-										"OK": function() { $(this).dialog("close"); }
+										"OK": function() { $(this).dialog("close"); window.location.reload(); }
 							});
 							$("#popupDialog").dialog("option", "modal", true);
 							$("#popupDialog").dialog("option", "title", "Compra efetuada com sucesso!");

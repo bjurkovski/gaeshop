@@ -160,10 +160,14 @@ class RegisterOrder(webapp.RequestHandler):
 						qty = min(item.quantity, item.product.stock)
 						if qty > 0:
 							item.product.stock -= qty
+							item.quantity -= qty
 							item.product.put()
 							order.addItem(item.product, qty)
 							order.put()
-							item.delete()
+							if item.quantity == 0:
+								item.delete()
+							else:
+								item.put()
 							receipt.append((item.product.name, qty))
 					if len(receipt) > 0:
 						retData = {"success": True, "receipt": receipt}
