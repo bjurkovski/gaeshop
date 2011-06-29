@@ -43,7 +43,7 @@ class Order(db.Model):
 	def getShipping(self):
 		sc = ShippingCalculator()
 		value = sc.compute(self.shippingAddress)
-		return value
+		return "R$ %0.2f" % (value)
 
 	def getState(self):
 		strings = { 'wait' : 'Em espera', 'paid' : 'Pago', 'canceled' : 'Cancelado'}
